@@ -18,6 +18,8 @@ from urllib.request import urlopen, Request
 import json
 from random import choice
 
+URL = "https://type.fit/api/quotes"
+
 
 def clear():
     """wipe terminal screen."""
@@ -36,7 +38,7 @@ clear()
 
 def get_api_data():
     """return all the quotes from the api."""
-    req = Request("https://type.fit/api/quotes",
+    req = Request(URL,
                   headers={"User-Agent": "Mozilla/5.0"})
 
     with urlopen(req, timeout=3) as url:
