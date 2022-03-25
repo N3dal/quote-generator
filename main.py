@@ -16,6 +16,7 @@ from os import name as OS_NAME
 from os import system
 from urllib.request import urlopen, Request
 import json
+from random import choice
 
 
 def clear():
@@ -38,7 +39,7 @@ def get_api_data():
     req = Request("https://type.fit/api/quotes",
                   headers={"User-Agent": "Mozilla/5.0"})
 
-    with urlopen(req, timeout=10) as url:
+    with urlopen(req, timeout=3) as url:
         data = json.load(url)
 
     return data
@@ -46,9 +47,16 @@ def get_api_data():
 
 def main():
 
-    data = get_api_data()
+    quotes = get_api_data()
 
-    print(data)
+    # now get random from the quotes.
+    random_quote = choice(quotes)
+
+    # notice that the list element that randomly been choose,
+    # is in fact a dictionary and the key is always: "text".
+
+    print("Today quote: ")
+    print(random_quote["text"])
 
 
 if __name__ == "__main__":
