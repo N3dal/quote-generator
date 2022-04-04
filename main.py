@@ -17,6 +17,9 @@ from os import system
 from urllib.request import urlopen, Request
 import json
 from random import choice
+from threading import Thread
+from time import sleep as delay
+from itertools import cycle
 
 URL = "https://type.fit/api/quotes"
 
@@ -45,6 +48,19 @@ def get_api_data():
         data = json.load(url)
 
     return data
+
+
+def animation():
+    """create a loading animation on the terminal."""
+
+    CHARS = ('\\', '-', '/', '|')
+
+    # make a cycle object.
+    CHARS = cycle(CHARS)
+
+    for char in CHARS:
+        print(char, end='\r')
+        delay(85e-3)
 
 
 def main():
