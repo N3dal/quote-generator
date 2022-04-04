@@ -14,6 +14,8 @@
 
 from os import name as OS_NAME
 from os import system
+from os import listdir
+from os import getcwd
 from urllib.request import urlopen, Request
 import json
 from random import choice
@@ -25,6 +27,8 @@ URL = "https://type.fit/api/quotes"
 
 # use this for stop the animation.
 ANIMATION_STATE = True
+
+CACHE_FILE_NAME = ".quotes.txt"
 
 
 def clear():
@@ -71,6 +75,26 @@ def animation():
         delay(85e-3)
 
 
+def create_cache():
+    """save the quotes into file."""
+
+    dirs_and_files = listdir(getcwd())
+
+    if CACHE_FILE_NAME not in dirs_and_files:
+        with open(f"{getcwd()}/{CACHE_FILE_NAME}", "w") as cache_file:
+            for line in get_api_data():
+                cache_file.write(line["text"])
+                cache_file.write('\n')
+
+
+def update_cache():
+    """update cache file from the api."""
+    with open(f"{getcwd()}/{CACHE_FILE_NAME}", "w") as cache_file:
+        for line in get_api_data():
+            cache_file.write(line["text"])
+            cache_file.write('\n')
+
+
 def main():
 
     global ANIMATION_STATE
@@ -78,7 +102,7 @@ def main():
     # first start the animation.
     animation_task = Thread(target=animation)
     animation_task.start()
-
+    cache()
     quotes = get_api_data()
 
     # kill the animation now, after we get our api data.
