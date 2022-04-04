@@ -23,6 +23,10 @@ from threading import Thread
 from time import sleep as delay
 from itertools import cycle
 
+
+# TODO: add REPL like interface that can user interact with it, for example they can generate another quote, or show cache file or update it and other things.
+# TODO: ask the users if they want to start program in interact mode by passing [-i] with the command=[./main.py -i].
+
 URL = "https://type.fit/api/quotes"
 
 # use this for stop the animation.
