@@ -84,15 +84,15 @@ def check_cache():
         return True
 
 
-def update_cache():
+def update_cache(quotes: list):
     """update/save cache file from the api.
     this will create or update cache file,
     if the file exist this will update it,
     if the file not exist this will create it."""
 
     with open(f"{getcwd()}/{CACHE_FILE_NAME}", "w") as cache_file:
-        for line in get_api_data():
-            cache_file.write(line["text"])
+        for quote in quotes:
+            cache_file.write(quote)
             cache_file.write('\n')
 
 
@@ -103,6 +103,25 @@ def get_cache():
         return cache_file.readlines()
 
 
+def get_quotes():
+    """get the quotes from the api and save them,
+    into cache file and then return the quotes."""
+
+    quotes = None
+
+    if check_cache():
+        quotes = get_cache()
+
+    else:
+        # if the cache file not exist.
+        quotes = [quote["text"] for quote in get_api_data()]
+
+        # now create cache:
+        update_cache(quotes)
+
+    return quotes
+
+
 def main():
 
     global ANIMATION_STATE
@@ -111,19 +130,19 @@ def main():
     animation_task = Thread(target=animation)
     animation_task.start()
 
-    quotes = get_api_data()
+    quotes = get_quotes()
 
     # kill the animation now, after we get our api data.
     ANIMATION_STATE = False
 
     # now get random from the quotes.
-    random_quote = choice(quotes)
+    random_quote = choice(quotes).strip('\n')
 
     # notice that the list element that randomly been choose,
     # is in fact a dictionary and the key is always: "text".
 
     print("Today quote: ")
-    print(random_quote["text"])
+    print(random_quote)
 
 
 if __name__ == "__main__":
