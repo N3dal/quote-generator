@@ -75,6 +75,15 @@ def animation():
         delay(85e-3)
 
 
+def check_cache():
+    """check out if the cache file exist or not."""
+
+    dirs_and_files = listdir(getcwd())
+
+    if CACHE_FILE_NAME in dirs_and_files:
+        return True
+
+
 def create_cache():
     """save the quotes into file."""
 
