@@ -24,7 +24,7 @@ from time import sleep as delay
 from itertools import cycle
 
 # Note: this script have a stupid/useless caching mechanism, so plz don't use in your code.
-# Simply out this script is useless, and the code to be honest is hurt my eyes, every time that i read.
+# Simply out this script is useless, and the code to be honest is hurt my eyes, every time that i read it.
 
 
 # TODO: add REPL like interface that can user interact with it, for example they can generate another quote, or show cache file or update it and other things.
