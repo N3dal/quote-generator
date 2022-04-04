@@ -89,10 +89,18 @@ def create_cache():
 
 def update_cache():
     """update cache file from the api."""
+
     with open(f"{getcwd()}/{CACHE_FILE_NAME}", "w") as cache_file:
         for line in get_api_data():
             cache_file.write(line["text"])
             cache_file.write('\n')
+
+
+def get_cache():
+    """return all the quotes that exist in the cache file as list."""
+
+    with open(f"{getcwd()}/{CACHE_FILE_NAME}", "r") as cache_file:
+        return cache_file.readlines()
 
 
 def main():
@@ -102,7 +110,7 @@ def main():
     # first start the animation.
     animation_task = Thread(target=animation)
     animation_task.start()
-    cache()
+
     quotes = get_api_data()
 
     # kill the animation now, after we get our api data.
