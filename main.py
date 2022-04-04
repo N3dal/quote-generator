@@ -84,20 +84,11 @@ def check_cache():
         return True
 
 
-def create_cache():
-    """save the quotes into file."""
-
-    dirs_and_files = listdir(getcwd())
-
-    if CACHE_FILE_NAME not in dirs_and_files:
-        with open(f"{getcwd()}/{CACHE_FILE_NAME}", "w") as cache_file:
-            for line in get_api_data():
-                cache_file.write(line["text"])
-                cache_file.write('\n')
-
-
 def update_cache():
-    """update cache file from the api."""
+    """update/save cache file from the api.
+    this will create or update cache file,
+    if the file exist this will update it,
+    if the file not exist this will create it."""
 
     with open(f"{getcwd()}/{CACHE_FILE_NAME}", "w") as cache_file:
         for line in get_api_data():
