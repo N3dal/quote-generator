@@ -23,6 +23,9 @@ from itertools import cycle
 
 URL = "https://type.fit/api/quotes"
 
+# use this for stop the animation.
+ANIMATION_STATE = True
+
 
 def clear():
     """wipe terminal screen."""
@@ -53,19 +56,33 @@ def get_api_data():
 def animation():
     """create a loading animation on the terminal."""
 
+    global ANIMATION_STATE
+
     CHARS = ('\\', '-', '/', '|')
 
     # make a cycle object.
     CHARS = cycle(CHARS)
 
     for char in CHARS:
+        if not ANIMATION_STATE:
+            break
+
         print(char, end='\r')
         delay(85e-3)
 
 
 def main():
 
+    global ANIMATION_STATE
+
+    # first start the animation.
+    animation_task = Thread(target=animation)
+    animation_task.start()
+
     quotes = get_api_data()
+
+    # kill the animation now, after we get our api data.
+    ANIMATION_STATE = False
 
     # now get random from the quotes.
     random_quote = choice(quotes)
