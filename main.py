@@ -60,9 +60,9 @@ def get_api_data():
                   headers={"User-Agent": "Mozilla/5.0"})
 
     with urlopen(req, timeout=3) as url:
-        data = json.load(url)
+        quotes = json.load(url)
 
-    return data
+    return [quote["text"] for quote in quotes]
 
 
 def animation():
@@ -93,7 +93,8 @@ def check_cache():
 
 
 def create_cache_file(quotes: list):
-    """create cache file"""
+    """create cache file,
+    use it also for update cache file."""
 
     with open(f"{getcwd()}/{CACHE_FILE_NAME}", "w") as cache_file:
         for quote in quotes:
@@ -119,7 +120,7 @@ def get_quotes():
 
     else:
         # if the cache file not exist.
-        quotes = [quote["text"] for quote in get_api_data()]
+        quotes = get_api_data()
 
         # now create cache:
         create_cache_file(quotes)
@@ -164,6 +165,8 @@ def repl():
             print(random_quote)
         elif user_input == "update":
             # update quote-cache file.
+            # create_cache_file(quotes)
+            pass
 
 
 def get_random_quote():
