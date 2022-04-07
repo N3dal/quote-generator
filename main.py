@@ -153,6 +153,8 @@ def get_user_input():
 def repl():
     """an interactive mode for quote-generator."""
 
+    global ANIMATION_STATE
+
     # some of commands that kill the repl, simply out for exit from the interactive mode.
     KILL_REPL = ("exit", "quit", "q")
 
@@ -165,7 +167,6 @@ def repl():
             print(random_quote)
         elif user_input == "update":
             # update quote-cache file.
-            # create_cache_file(quotes)
             pass
 
 
