@@ -92,11 +92,8 @@ def check_cache():
         return True
 
 
-def update_cache(quotes: list):
-    """update/save cache file from the api.
-    this will create or update cache file,
-    if the file exist this will update it,
-    if the file not exist this will create it."""
+def create_cache_file(quotes: list):
+    """create cache file"""
 
     with open(f"{getcwd()}/{CACHE_FILE_NAME}", "w") as cache_file:
         for quote in quotes:
@@ -125,7 +122,7 @@ def get_quotes():
         quotes = [quote["text"] for quote in get_api_data()]
 
         # now create cache:
-        update_cache(quotes)
+        create_cache_file(quotes)
 
     return quotes
 
@@ -162,13 +159,33 @@ def repl():
 
         if user_input == "clear":
             clear()
-        
+        elif user_input == "print":
+            random_quote = get_random_quote()
+            print(random_quote)
+        elif user_input == "update":
+            # update quote-cache file.
 
+
+def get_random_quote():
+    """get random quote from the quote cache file or the api."""
+    global ANIMATION_STATE
+
+    # first start the animation.
+    animation_task = Thread(target=animation)
+    animation_task.start()
+
+    quotes = get_quotes()
+
+    # kill the animation now, after we get our api data.
+    ANIMATION_STATE = False
+
+    # now get random from the quotes.
+    random_quote = choice(quotes).strip('\n')
+
+    return random_quote
 
 
 def main():
-
-    global ANIMATION_STATE
 
     # first get the user args.
     user_arguments = get_arguments()
@@ -178,23 +195,10 @@ def main():
         repl()
 
     else:
-        # first start the animation.
-        animation_task = Thread(target=animation)
-        animation_task.start()
+        random_quote = get_random_quote()
 
-        quotes = get_quotes()
-
-        # kill the animation now, after we get our api data.
-        ANIMATION_STATE = False
-
-        # now get random from the quotes.
-        random_quote = choice(quotes).strip('\n')
-
-        # notice that the list element that randomly been choose,
-        # is in fact a dictionary and the key is always: "text".
-
-        print("Today quote: ")
-        print(random_quote)
+        print("Today Quote:")
+        print(f'"{random_quote}"')
 
 
 if __name__ == "__main__":
