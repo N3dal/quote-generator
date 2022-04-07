@@ -145,6 +145,13 @@ def get_arguments():
     return user_arguments
 
 
+def user_input():
+    """get input from the user and lower and strip it."""
+
+    POINTER = ">>>"
+    return input(POINTER).lower().strip()
+
+
 def repl():
     """an interactive mode for quote-generator."""
 
