@@ -153,6 +153,13 @@ def main():
 
     global ANIMATION_STATE
 
+    # first get the user args.
+    user_arguments = get_arguments()
+
+    if user_arguments:
+        # start the interactive mode.
+        pass
+
     # first start the animation.
     animation_task = Thread(target=animation)
     animation_task.start()
