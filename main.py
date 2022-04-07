@@ -22,6 +22,7 @@ from random import choice
 from threading import Thread
 from time import sleep as delay
 from itertools import cycle
+from sys import argv
 
 # Note: this script have a stupid/useless caching mechanism, so plz don't use in your code.
 # Simply out this script is useless, and the code to be honest is hurt my eyes, every time that i read it.
@@ -129,9 +130,14 @@ def get_quotes():
     return quotes
 
 
+def repl():
+    """an interactive mode for quote-generator."""
+
+
 def main():
 
     global ANIMATION_STATE
+    
 
     # first start the animation.
     animation_task = Thread(target=animation)
