@@ -130,6 +130,21 @@ def get_quotes():
     return quotes
 
 
+def get_arguments():
+    """get the arguments from the user,
+    and checkout if the args are exist or not."""
+
+    ARGUMENTS = ('-i',)
+
+    user_arguments = argv[1:]
+
+    for arg in user_arguments:
+        if arg not in ARGUMENTS:
+            return False
+
+    return user_arguments
+
+
 def repl():
     """an interactive mode for quote-generator."""
 
@@ -137,7 +152,6 @@ def repl():
 def main():
 
     global ANIMATION_STATE
-    
 
     # first start the animation.
     animation_task = Thread(target=animation)
