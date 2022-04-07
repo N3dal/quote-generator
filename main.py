@@ -145,15 +145,25 @@ def get_arguments():
     return user_arguments
 
 
-def user_input():
+def get_user_input():
     """get input from the user and lower and strip it."""
 
-    POINTER = ">>>"
+    POINTER = ">>> "
     return input(POINTER).lower().strip()
 
 
 def repl():
     """an interactive mode for quote-generator."""
+
+    # some of commands that kill the repl, simply out for exit from the interactive mode.
+    KILL_REPL = ("exit", "quit", "q")
+
+    while (user_input := get_user_input()) not in KILL_REPL:
+
+        if user_input == "clear":
+            clear()
+        
+
 
 
 def main():
@@ -165,25 +175,26 @@ def main():
 
     if user_arguments:
         # start the interactive mode.
-        pass
+        repl()
 
-    # first start the animation.
-    animation_task = Thread(target=animation)
-    animation_task.start()
+    else:
+        # first start the animation.
+        animation_task = Thread(target=animation)
+        animation_task.start()
 
-    quotes = get_quotes()
+        quotes = get_quotes()
 
-    # kill the animation now, after we get our api data.
-    ANIMATION_STATE = False
+        # kill the animation now, after we get our api data.
+        ANIMATION_STATE = False
 
-    # now get random from the quotes.
-    random_quote = choice(quotes).strip('\n')
+        # now get random from the quotes.
+        random_quote = choice(quotes).strip('\n')
 
-    # notice that the list element that randomly been choose,
-    # is in fact a dictionary and the key is always: "text".
+        # notice that the list element that randomly been choose,
+        # is in fact a dictionary and the key is always: "text".
 
-    print("Today quote: ")
-    print(random_quote)
+        print("Today quote: ")
+        print(random_quote)
 
 
 if __name__ == "__main__":
